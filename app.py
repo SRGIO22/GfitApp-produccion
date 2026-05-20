@@ -55,5 +55,22 @@ def crear_reserva():
     reservas.append(nueva_reserva)
     return jsonify(nueva_reserva), 201
 
+# --- BUSCAR SOCIO POR ID ---
+@app.route('/socios/<int:id>', methods=['GET'])
+def get_socio(id):
+    socio = next((s for s in socios if s['id'] == id), None)
+    if socio:
+        return jsonify(socio)
+    return jsonify({"error": "Socio no encontrado"}), 404
+
+# --- CANCELAR RESERVA ---
+@app.route('/reservas/<int:id>', methods=['DELETE'])
+def cancelar_reserva(id):
+    reserva = next((r for r in reservas if r['id'] == id), None)
+    if reserva:
+        reservas.remove(reserva)
+        return jsonify({"mensaje": "Reserva cancelada correctamente"})
+    return jsonify({"error": "Reserva no encontrada"}), 404
+
 if __name__ == '__main__':
     app.run(debug=True)
