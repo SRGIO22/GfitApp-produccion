@@ -4,21 +4,13 @@
 
 \## ¿Qué he hecho esta semana?
 
-\- Instalado Python, Git y Flask
-
-\- Clonado el repositorio y creado mi rama personal
-
 \- Desarrollado la API REST con 6 endpoints funcionales
 
-\- Probado que todos los endpoints responden correctamente
+\- Probado que todos los endpoints responden correctamente con datos de prueba
+- Modificar la API REST para poder conectarse con la base de datos de Ainhoa
+- Probado que todos los endpoints responden correctamente con los datos de la base de datos
 
 
-
-\## ¿Qué falta?
-
-\- Conectar la API con la base de datos real de Ainhoa
-
-\- Integrar con el frontend de Ángel
 
 
 
