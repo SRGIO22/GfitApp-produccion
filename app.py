@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import sqlite3
+import os
 
 app = Flask(__name__)
 
@@ -9,6 +10,17 @@ def get_db():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
+
+def init_db():
+    if not os.path.exists(DATABASE):
+        conn = sqlite3.connect(DATABASE)
+        with open('sql/creacion_tablas_Gfit.sql', 'r') as f:
+            conn.executescript(f.read())
+        with open('sql/datos_prueba_bbdd.sql', 'r') as f:
+            conn.executescript(f.read())
+        conn.close()
+
+init_db()
 
 # --- ENDPOINTS DE CLASES ---
 @app.route('/clases', methods=['GET'])
