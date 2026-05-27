@@ -20,7 +20,7 @@ def get_clases():
 
 @app.route('/clases', methods=['POST'])
 def crear_clase():
-    data = request.json
+    data = request.jsonc
     conn = get_db()
     conn.execute('''INSERT INTO clases 
         (id_entrenador, nombre_clase, descripcion_clase, fecha_clase, hora_clase, duracion_clase, capacidad_max)
@@ -94,4 +94,4 @@ def cancelar_reserva(id):
     return jsonify({"error": "Reserva no encontrada"}), 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
