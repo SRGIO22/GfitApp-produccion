@@ -1,10 +1,13 @@
 ANALISIS BACKEND AVANZADO PARA LA APP
 
+
 Mi parte del trabajo consisitira en desarrollar funcionalidades como gestión de membresías, historial y sistema de notificaciones básico.
 
 Para hacer estas funcionalidades vamos a estar trabajando con Flask y SQLite.
 
+
 FUNCIONALIDADES
+
 
 1.Membresias
 
