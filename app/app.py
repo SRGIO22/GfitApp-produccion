@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
+from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify 
 import sqlite3
 import os
 from datetime import datetime
@@ -245,6 +245,72 @@ def nueva_reserva_formulario(actividad):
     if 'user_id' not in session:
         return redirect(url_for('login'))
     return render_template('reservar_formulario.html', actividad_seleccionada=actividad)
+
+@app.route('/clases')
+def clases():
+
+    conn = get_db_connection()
+
+    try:
+        clases = conn.execute('''
+            SELECT *
+            FROM clases
+        ''').fetchall()
+
+        resultado = []
+
+        for clase in clases:
+            resultado.append({
+                "id": clase["id"],
+                "nombre_clase": clase["nombre_clase"],
+                "instructor": clase["instructor"],
+                "capacidad_max": clase["capacidad_max"]
+            })
+
+        return jsonify(resultado)
+
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
+    finally:
+        conn.close()
+
+
+@app.route('/socios')
+def socios():
+
+    conn = get_db_connection()
+
+    try:
+        socios = conn.execute('''
+            SELECT id, nombre, apellidos, email, rol
+            FROM usuarios
+        ''').fetchall()
+
+        resultado = []
+
+        for socio in socios:
+            resultado.append({
+                "id": socio["id"],
+                "nombre": socio["nombre"],
+                "apellidos": socio["apellidos"],
+                "email": socio["email"],
+                "rol": socio["rol"]
+            })
+
+        return jsonify(resultado)
+
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
+    finally:
+        conn.close()
     
 if __name__ == '__main__':
     app.run(debug=True)
