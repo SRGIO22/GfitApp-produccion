@@ -311,6 +311,61 @@ def socios():
 
     finally:
         conn.close()
+
+        @app.route('/api/membresias', methods=['POST'])
+def crear_membresia():
+
+    data = request.get_json()
+
+    usuario_id = data.get('usuario_id')
+    tipo = data.get('tipo')
+
+    if not usuario_id or not tipo:
+        return jsonify({
+            "error": "Faltan datos"
+        }), 400
+
+    fecha_inicio = datetime.now().strftime('%Y-%m-%d')
+
+    # Calculamos duración
+    if tipo == "Mensual":
+        fecha_fin = "2026-06-30"
+        precio = 29.99
+
+    elif tipo == "Anual":
+        fecha_fin = "2027-05-30"
+        precio = 199.99
+
+    else:
+        return jsonify({
+            "error": "Tipo de membresía inválido"
+        }), 400
+
+    estado = "Activa"
+
+    conn = get_db_connection()
+
+    conn.execute('''
+        INSERT INTO membresias
+        (usuario_id, tipo, estado, fecha_inicio, fecha_fin, precio)
+        VALUES (?, ?, ?, ?, ?, ?)
+    ''', (
+        usuario_id,
+        tipo,
+        estado,
+        fecha_inicio,
+        fecha_fin,
+        precio
+    ))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({
+        "mensaje": "Membresía creada correctamente",
+        "tipo": tipo,
+        "precio": precio
+    })
     
 if __name__ == '__main__':
     app.run(debug=True)

@@ -21,9 +21,10 @@ CREATE TABLE clases (
 CREATE TABLE IF NOT EXISTS membresias (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     usuario_id INTEGER,
-    tipo TEXT, -- 'Mensual', 'Semestral', 'Anual'
-    estado TEXT, -- 'Activa', 'Expirada'
+    tipo TEXT,
+    estado TEXT,
     fecha_inicio TEXT,
     fecha_fin TEXT,
+    precio DECIMAL,
     FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
 );
