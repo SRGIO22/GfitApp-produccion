@@ -1,68 +1,50 @@
-# \# GfitApp – API REST
+# GfitApp – Repositorio de Producción
+## DevOps / Despliegue – Sergio Rodríguez García
+### 1º DAM · Colegio Santa Gema Galgani · Curso 2025-2026
 
+## URL pública
+🌐 https://gfitapp-produccion.onrender.com
 
+## ¿Qué es este repositorio?
+Repositorio de producción de GfitApp, una aplicación de gestión de socios 
+y clases de gimnasio. Este repositorio está conectado a Render.com y 
+cualquier cambio que se suba se despliega automáticamente.
 
-\## ¿Qué es esto?
+## ¿Cómo está desplegado?
+- La app corre en Render.com con un servidor Gunicorn
+- La base de datos SQLite se inicializa automáticamente al arrancar
+- Las variables de entorno están configuradas en Render (SECRET_KEY, FLASK_ENV)
 
-Backend de GfitApp, una aplicación de gestión de socios y clases de gimnasio.
+## Archivos clave
+- app.py: API REST en Flask con inicialización automática de BD
+- requirements.txt: dependencias necesarias (Flask, Gunicorn)
+- Procfile: indica a Render cómo arrancar la app
+- sql/: scripts SQL para crear tablas y datos de prueba
 
-Desarrollado por Miguel Ángel Fernández Sánchez (1º DAM – Colegio Santa Gema Galgani).
+## Endpoints disponibles
+### Socios
+- GET /socios → devuelve todos los socios
+- GET /socios/<id> → devuelve un socio por id
+- POST /socios → registra un socio nuevo
 
+### Clases
+- GET /clases → devuelve todas las clases
+- POST /clases → crea una clase nueva
 
+### Reservas
+- GET /reservas → devuelve todas las reservas
+- POST /reservas → crea una reserva nueva
+- DELETE /reservas/<id> → cancela una reserva
 
-\## ¿Cómo ejecutar la API?
+## Tecnología usada
+- Python 3 + Flask
+- SQLite
+- Gunicorn
+- Render.com (plan gratuito)
+- Git + GitHub
 
-
-
-1\. Instalar Flask:
-
-pip install flask
-
-
-
-2\. Ejecutar la API:
-
-python app.py
-
-
-
-3\. Abrir el navegador en:
-
-http://127.0.0.1:5000
-
-
-
-\## Endpoints disponibles
-
-
-
-\### Clases
-
-\- GET http://127.0.0.1:5000/clases → devuelve todas las clases
-
-\- POST http://127.0.0.1:5000/clases → crea una clase nueva
-
-
-
-\### Socios
-
-\- GET http://127.0.0.1:5000/socios → devuelve todos los socios
-
-\- POST http://127.0.0.1:5000/socios → registra un socio nuevo
-
-
-
-\### Reservas
-
-\- GET http://127.0.0.1:5000/reservas → devuelve todas las reservas
-
-\- POST http://127.0.0.1:5000/reservas → crea una reserva nueva
-
-
-
-\## Tecnología usada
-
-\- Python 3
-
-\- Flask
-
+## Cómo actualizar producción
+Cuando un compañero termine su módulo, se integra así:
+1. git merge nombre-rama-compañero
+2. git push produccion sergio-rodriguez:main
+3. Render redespliega automáticamente
