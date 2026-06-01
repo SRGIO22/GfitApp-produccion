@@ -28,3 +28,11 @@ CREATE TABLE IF NOT EXISTS membresias (
     precio DECIMAL,
     FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
 );
+
+CREATE TABLE historial (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id INTEGER NOT NULL,
+    accion TEXT NOT NULL,
+    fecha TEXT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
