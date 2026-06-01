@@ -312,7 +312,7 @@ def socios():
     finally:
         conn.close()
 
-        @app.route('/api/membresias', methods=['POST'])
+@app.route('/api/membresias', methods=['POST'])
 def crear_membresia():
 
     data = request.get_json()
@@ -327,7 +327,6 @@ def crear_membresia():
 
     fecha_inicio = datetime.now().strftime('%Y-%m-%d')
 
-    # Calculamos duración
     if tipo == "Mensual":
         fecha_fin = "2026-06-30"
         precio = 29.99
@@ -366,9 +365,80 @@ def crear_membresia():
         "tipo": tipo,
         "precio": precio
     })
-    
-if __name__ == '__main__':
-    app.run(debug=True)
+
+
+@app.route('/api/membresias/<int:membresia_id>', methods=['PUT'])
+def actualizar_membresia(membresia_id):
+
+    data = request.get_json()
+
+    tipo = data.get('tipo')
+    estado = data.get('estado')
+
+    if not tipo or not estado:
+        return jsonify({
+            "error": "Faltan datos"
+        }), 400
+
+    conn = get_db_connection()
+
+    membresia = conn.execute(
+        'SELECT * FROM membresias WHERE id = ?',
+        (membresia_id,)
+    ).fetchone()
+
+    if not membresia:
+        conn.close()
+        return jsonify({
+            "error": "Membresía no encontrada"
+        }), 404
+
+    conn.execute('''
+        UPDATE membresias
+        SET tipo = ?, estado = ?
+        WHERE id = ?
+    ''', (
+        tipo,
+        estado,
+        membresia_id
+    ))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({
+        "mensaje": "Membresía actualizada correctamente"
+    })
+
+
+@app.route('/api/membresias/<int:membresia_id>', methods=['DELETE'])
+def eliminar_membresia(membresia_id):
+
+    conn = get_db_connection()
+
+    membresia = conn.execute(
+        'SELECT * FROM membresias WHERE id = ?',
+        (membresia_id,)
+    ).fetchone()
+
+    if not membresia:
+        conn.close()
+        return jsonify({
+            "error": "Membresía no encontrada"
+        }), 404
+
+    conn.execute(
+        'DELETE FROM membresias WHERE id = ?',
+        (membresia_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({
+        "mensaje": "Membresía eliminada correctamente"
+    })
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
