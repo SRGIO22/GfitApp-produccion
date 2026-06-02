@@ -36,3 +36,12 @@ CREATE TABLE historial (
     fecha TEXT NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
+
+CREATE TABLE notificaciones (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id INTEGER NOT NULL,
+    mensaje TEXT NOT NULL,
+    leida INTEGER DEFAULT 0,
+    fecha TEXT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
