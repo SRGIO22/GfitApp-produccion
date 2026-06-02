@@ -18,6 +18,39 @@ def get_db_connection():
     return conn
 
 def registrar_historial(usuario_id, accion):
+
+    crear_notificacion(
+    usuario_id,
+    "Tu membresía ha sido eliminada"
+)
+
+    crear_notificacion(
+    membresia['usuario_id'],
+    f"Tu membresía ha sido actualizada a {tipo}"
+)
+
+    crear_notificacion(
+    usuario_id,
+    f"Tu membresía {tipo} ha sido creada correctamente"
+)
+
+def crear_notificacion(usuario_id, mensaje):
+    conn = get_db_connection()
+
+    conn.execute('''
+        INSERT INTO notificaciones
+        (usuario_id, mensaje, leida, fecha)
+        VALUES (?, ?, ?, ?)
+    ''', (
+        usuario_id,
+        mensaje,
+        0,
+        datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    ))
+
+    conn.commit()
+    conn.close()
+
     conn = get_db_connection()
     conn.execute('''
         INSERT INTO historial (usuario_id, accion, fecha)
@@ -401,6 +434,35 @@ def obtener_historial(usuario_id):
             "id": registro['id'],
             "accion": registro['accion'],
             "fecha": registro['fecha']
+        })
+
+    return jsonify(resultado)
+
+    @app.route('/api/notificaciones/<int:usuario_id>')
+def obtener_notificaciones(usuario_id):
+
+    if 'user_id' not in session:
+        return jsonify({"error": "No autorizado"}), 401
+
+    conn = get_db_connection()
+
+    notificaciones = conn.execute('''
+        SELECT *
+        FROM notificaciones
+        WHERE usuario_id = ?
+        ORDER BY fecha DESC
+    ''', (usuario_id,)).fetchall()
+
+    conn.close()
+
+    resultado = []
+
+    for n in notificaciones:
+        resultado.append({
+            "id": n["id"],
+            "mensaje": n["mensaje"],
+            "leida": n["leida"],
+            "fecha": n["fecha"]
         })
 
     return jsonify(resultado)
