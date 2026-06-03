@@ -1,35 +1,25 @@
-ANALISIS BACKEND AVANZADO PARA LA APP
+# Análisis del código de G1 – Sergio Rodríguez García
 
+## Qué he visto hoy
+He clonado el repositorio y revisado el código entregado por el Grupo 1.
+El backend está desarrollado por Miguel Ángel Fernández en Python con Flask.
 
-Mi parte del trabajo consisitira en desarrollar funcionalidades como gestión de membresías, historial y sistema de notificaciones básico.
+## Estructura del proyecto
+- app.py: API REST con endpoints para clases, socios y reservas
+- gFitBBDDPrueba.db: base de datos SQLite con los datos de prueba
+- README.md: documentación del proyecto
 
-Para hacer estas funcionalidades vamos a estar trabajando con Flask y SQLite.
+## Endpoints disponibles
+- GET/POST /clases
+- GET/POST /socios
+- GET/POST /reservas
+- DELETE /reservas/<id>
 
-
-FUNCIONALIDADES
-
-
-1.Membresias
-
-Este sistema de membresias permitira:
-
-* Crear membresías
-* Consultar membresías y su estado
-* Actualizar estado de las membresías
-* Eliminar membresías
-
-2.Historial
-
-Este historial permitira:
-
-* Consultar historial de actividades del usuario
-* Registrar acciones
-
-3.Notificaciones
-
-Este sistema de notificaciones permitira:
-
-* Generar notificaciones 
-* Consultar las notificaciones que estan pendientes
-* Cambiar estado de la notificación (leido y no leido)
-
+## Qué voy a ampliar yo
+Voy a desplegar esta aplicación en Render.com para que sea accesible 
+desde una URL pública. Para ello necesito:
+1. requirements.txt con las dependencias (ya creado)
+2. Procfile para que Render sepa cómo arrancar la app (ya creado)
+3. Conectar el repositorio con Render.com
+4. Configurar variables de entorno
+5. Verificar que la URL pública funciona correctamente
