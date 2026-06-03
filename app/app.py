@@ -270,6 +270,22 @@ def nueva_reserva_formulario(actividad):
 
 @app.route('/clases')
 def clases():
+    return render_template('clases.html')
+
+@app.route('/panel')
+def panel():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('panel.html')
+
+@app.route('/historial')
+def historial():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('historial.html')
+
+@app.route('/api/clases')
+def api_clases():
     conn = get_db_connection()
     try:
         clases = conn.execute('''
