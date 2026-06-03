@@ -2,9 +2,9 @@ import sqlite3
 import os
 
 # Ruta absoluta para no fallar
-DB_PATH = os.path.join(os.path.dirname(__file__), 'database', 'gfit.db')
+DB_PATH = os.path.join(os.path.dirname(__file__), 'gfit.db')
 
-def fijar()
+def fijar():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     
@@ -30,7 +30,7 @@ def fijar()
 
     conn.commit()
     conn.close()
-    print(Tablas 'reservas' y 'socios' creadas con éxito.)
+    print("Tablas 'reservas' y 'socios' creadas con éxito.")
 
-if __name__ == __main__
+if __name__ == "__main__":
     fijar()
