@@ -2,164 +2,72 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>GfitApp - Horarios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas – GFitApp</title>
+    <meta name="description" content="Reserva tu clase en GFitApp de forma rápida y sencilla.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-    
-    <style>
-        body { background-color: #0a0a0a; color: white; font-family: 'Segoe UI', sans-serif; }
-        .text-gold { color: #ffc107; }
-        .btn-horario {
-            background: #1a1a1a; border: 1px solid #333; color: white; padding: 20px;
-            border-radius: 15px; transition: all 0.3s ease; cursor: pointer;
-            text-align: left; width: 100%; margin-bottom: 15px;
-        }
-        .btn-horario:hover {
-            transform: translateY(-5px); border-color: #ffc107; background: #252525;
-        }
-        .aforo-badge {
-            background: rgba(255, 193, 7, 0.1); color: #ffc107; padding: 5px 10px;
-            border-radius: 5px; font-size: 0.8rem;
-        }
-        .modal-content { background: #1a1a1a; border: 1px solid #ffc107; color: white; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://framerusercontent.com/images/8bOBdZc7pcumKLrCZagKXJMKfrE.png" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="https://framerusercontent.com/images/e0eyT5DJoqOkBYq9GE3nO7YiA.png" media="(prefers-color-scheme: dark)">
 </head>
-<body class="p-4">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h1 class="fw-bold">ELIGE TU <span class="text-gold">HORARIO</span></h1>
-            <p class="text-secondary">Sala de Pesas - Duración: 1h 30min</p>
-            <input type="date" id="fechaReserva" class="form-control d-inline-block w-auto bg-dark text-white border-secondary mb-4">
+<body>
+    <nav>
+        <a href="index.html" class="nav-back">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
+        <a href="index.html" class="nav-brand">GFitApp</a>
+    </nav>
+
+    <main>
+        <div class="burbuja mx-auto text-center">
+            <h2 class="titulo">Reserva tu Clase</h2>
+            <p class="subtitulo">
+                Selecciona una clase y revisa los detalles antes de confirmar tu asistencia.
+            </p>
         </div>
 
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <button class="btn-horario shadow" id="btn-18" onclick="validarYAbrir('8:00 - 9:30', 8)">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h4 class="mb-1">8:00 - 9:30'</h4>
-                            <span class="text-secondary">Turno Mañana</span>
-                        </div>
-                        <span class="aforo-badge">Aforo: {{ conteos['8:00 - 9:30'] }} / 20</span>
-                    </div>
-                </button>
+        <form id="formReserva" class="burbuja mx-auto form-max">
+            <div id="formFeedback" class="alert-danger" style="display:none;"></div>
+            <div id="formSuccess" class="alert-success" style="display:none;"></div>
 
-                <button class="btn-horario shadow" id="btn-18" onclick="validarYAbrir('10:00 - 11:30', 10)">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h4 class="mb-1">10:00 - 11:30</h4>
-                            <span class="text-secondary">Turno Mañana</span>
-                        </div>
-                        <span class="aforo-badge">Aforo: {{ conteos['10:00 - 11:30'] }} / 20</span>
-                    </div>
-                </button>
-
-                <button class="btn-horario shadow" onclick="validarYAbrir('18:00 - 19:30', 18)">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h4 class="mb-1">18:00 - 19:30</h4>
-                            <span class="text-secondary">Turno Tarde</span>
-                        </div>
-                        <span class="aforo-badge">Aforo: {{ conteos['18:00 - 19:30'] }} / 20</span>
-                    </div>
-                </button>
-                
-                <div class="text-center mt-4">
-                    <a href="/" class="text-secondary text-decoration-none">← Volver al panel</a>
-                </div>
+            <div class="mb-3">
+                <label for="clase" class="form-label"><strong>Clase</strong></label>
+                <select id="clase" name="clase_id" class="form-select" required>
+                    <option value="">Selecciona una clase</option>
+                </select>
             </div>
-        </div>
-    </div>
 
-    <div class="modal fade" id="modalConfirmar" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold text-gold">Resumen de la Reserva</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="p-3 bg-dark rounded border border-secondary">
-                        <p class="mb-0"><strong>Clase:</strong> Sala de Pesas</p>
-                        <p class="mb-0"><strong>Día:</strong> <span id="resumenDia"></span></p>
-                        <p class="mb-0"><strong>Hora:</strong> <span id="resumenHora"></span></p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-warning fw-bold" onclick="finalizarTodo()">CONFIRMAR RESERVA</button>
-                </div>
+            <div id="infoClase" class="p-3 mt-3 border rounded bg-light d-none">
+                <h5 class="mb-3"><i class="bi bi-info-circle"></i> Detalles de la clase</h5>
+                <p><strong>Fecha:</strong> <span id="infoFecha"></span></p>
+                <p><strong>Hora:</strong> <span id="infoHora"></span></p>
+                <p><strong>Duración:</strong> <span id="infoDuracion"></span> min</p>
+                <p><strong>Entrenador:</strong> <span id="infoEntrenador"></span></p>
             </div>
+
+            <input type="hidden" id="socio" name="id_socio" value="">
+
+            <div class="botones mt-4">
+                <button type="submit" class="btn btn-dark" id="btnConfirmarReserva">
+                    <i class="bi bi-check2-circle"></i> Confirmar reserva
+                </button>
+                <button type="reset" class="btn btn-secondary">
+                    <i class="bi bi-eraser"></i> Borrar campos
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 GFitApp &mdash; Todos los derechos reservados.</p>
         </div>
-    </div>
+    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        // Fecha por defecto
-        document.getElementById('fechaReserva').valueAsDate = new Date();
-
-        let horaSeleccionada = "";
-
-        function validarYAbrir(rango, horaInicio) {
-            const ahora = new Date();
-            const horaActual = ahora.getHours();
-            const fechaInput = document.getElementById('fechaReserva').value;
-            const fechaSeleccionada = new Date(fechaInput);
-
-            // Bloqueo de horas pasadas si es hoy
-            if (fechaSeleccionada.toDateString() === ahora.toDateString() && horaActual >= horaInicio) {
-                Swal.fire({ 
-                    icon: 'error', 
-                    title: 'Horario pasado', 
-                    text: 'Esta clase ya ha comenzado o terminado.',
-                    background: '#1a1a1a', 
-                    color: '#fff' 
-                });
-                return;
-            }
-
-            horaSeleccionada = rango;
-            document.getElementById('resumenDia').innerText = fechaInput;
-            document.getElementById('resumenHora').innerText = rango;
-            
-            const myModal = new bootstrap.Modal(document.getElementById('modalConfirmar'));
-            myModal.show();
-        }
-
-        function finalizarTodo() {
-            const fecha = document.getElementById('fechaReserva').value;
-            
-            fetch('/confirmar_reserva_real', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    clase: "Sala de Pesas",
-                    fecha: fecha,
-                    hora: horaSeleccionada
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Reservado!',
-                        text: 'Tu clase se ha guardado correctamente.',
-                        background: '#1a1a1a',
-                        color: '#fff'
-                    }).then(() => {
-                        window.location.href = '/perfil';
-                    });
-                } else {
-                    Swal.fire('Error', 'No se pudo guardar la reserva.', 'error');
-                }
-            })
-            .catch(err => {
-                Swal.fire('Error', 'Error de conexión con el servidor.', 'error');
-            });
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

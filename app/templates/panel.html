@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel – GFitApp</title>
+    <meta name="description" content="Tu panel de socio en GFitApp. Historial, progreso y perfil.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://framerusercontent.com/images/8bOBdZc7pcumKLrCZagKXJMKfrE.png" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="https://framerusercontent.com/images/e0eyT5DJoqOkBYq9GE3nO7YiA.png" media="(prefers-color-scheme: dark)">
+</head>
+<body>
+    <input type="checkbox" id="menu-toggle">
+    <nav>
+        <label for="menu-toggle" class="hamburguesa">&#9776;</label>
+        <ul class="text-center" id="nav-menu">
+            <li><a href="index.html" class="nav-menu-link">Inicio</a></li>
+            <li><a href="clases.html" class="nav-menu-link">Cursos</a></li>
+            <li><a href="reservas.html" class="nav-menu-link">Reserva</a></li>
+            <li><a href="panel.html" class="nav-menu-link">Panel</a></li>
+            <li><a href="perfil.html" class="nav-menu-link"><i class="bi bi-person-circle" style="font-size: 1.3rem; margin-right: 6px;"></i> Perfil</a></li>
+        </ul>
+        <a href="index.html" class="nav-brand">GFitApp</a>
+    </nav>
+
+    <main>
+        <div class="burbuja mx-auto text-center">
+            <h2 class="titulo">Panel de Socio</h2>
+            <p class="subtitulo">Bienvenido, <span id="panelNombre">Ángel</span></p>
+        </div>
+
+        <div class="container">
+            <div class="row g-4">
+
+                <!-- Historial de reservas -->
+                <div class="col-md-4">
+                    <div class="panel-card p-4 h-100">
+                        <div class="text-center mb-3">
+                            <i class="bi bi-clock-history card-icon"></i>
+                        </div>
+                        <h4 class="text-center">Historial</h4>
+                        <p class="text-center text-muted small" id="panelResumenHistorial">Cargando...</p>
+                        <div class="mt-auto text-center pt-3">
+                            <a href="historial.html" class="btn btn-dark btn-sm">
+                                <i class="bi bi-eye"></i> Ver historial
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progreso personal -->
+                <div class="col-md-4">
+                    <div class="panel-card p-4 h-100">
+                        <div class="text-center mb-3">
+                            <i class="bi bi-graph-up-arrow card-icon"></i>
+                        </div>
+                        <h4 class="text-center">Progreso</h4>
+                        <div class="my-3">
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span>Clases completadas</span>
+                                <span id="progresoClases">0</span>
+                            </div>
+                            <div class="progress">
+                                <div id="barraProgreso" class="progress-bar" style="width:0%;" role="progressbar"></div>
+                            </div>
+                        </div>
+                        <div class="my-3">
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span>Meta mensual</span>
+                                <span id="progresoMeta">0 / 12</span>
+                            </div>
+                            <div class="progress">
+                                <div id="barraMeta" class="progress-bar" style="width:0%;" role="progressbar"></div>
+                            </div>
+                        </div>
+                        <p class="text-center text-muted small mb-0">Sigue así, ¡vas genial!</p>
+                    </div>
+                </div>
+
+                <!-- Edición de perfil -->
+                <div class="col-md-4">
+                    <div class="panel-card p-4 h-100">
+                        <div class="text-center mb-3">
+                            <i class="bi bi-person-gear card-icon"></i>
+                        </div>
+                        <h4 class="text-center">Perfil</h4>
+                        <p class="small mb-1"><strong>Email:</strong> <span id="panelEmail">—</span></p>
+                        <p class="small mb-1"><strong>Teléfono:</strong> <span id="panelTelefono">—</span></p>
+                        <p class="small mb-0"><strong>Miembro desde:</strong> <span id="panelMiembroDesde">enero 2026</span></p>
+                        <div class="mt-auto text-center pt-3">
+                            <a href="perfil.html" class="btn btn-dark btn-sm">
+                                <i class="bi bi-pencil-square"></i> Editar perfil
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 GFitApp &mdash; Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

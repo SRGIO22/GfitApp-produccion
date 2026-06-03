@@ -3,88 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Socio - GfitApp</title>
+    <title>Perfil – GFitApp</title>
+    <meta name="description" content="Tu perfil en GFitApp. Consulta y gestiona tu información personal.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background-color: #0a0a0a; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .navbar { background-color: #1a1a1a; border-bottom: 2px solid #ffc107; }
-        .profile-card { background: #1a1a1a; border: 1px solid #333; border-radius: 15px; padding: 25px; margin-top: 30px; }
-        .text-warning { color: #ffc107 !important; }
-        .table { background: #1a1a1a; color: white; border-radius: 10px; overflow: hidden; margin-top: 20px; }
-        .table thead { background: #252525; color: #ffc107; }
-        .btn-outline-warning { border-color: #ffc107; color: #ffc107; }
-        .btn-outline-warning:hover { background-color: #ffc107; color: black; }
-        .badge-plan { background-color: #ffc107; color: black; font-weight: bold; padding: 5px 10px; border-radius: 5px; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://framerusercontent.com/images/8bOBdZc7pcumKLrCZagKXJMKfrE.png" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="https://framerusercontent.com/images/e0eyT5DJoqOkBYq9GE3nO7YiA.png" media="(prefers-color-scheme: dark)">
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark px-4">
-        <a class="navbar-brand fw-bold text-warning" href="/">GFIT APP</a>
-        <div class="ms-auto">
-            <a href="/logout" class="btn btn-sm btn-outline-danger">Cerrar Sesión</a>
-        </div>
+    <nav>
+        <a href="index.html" class="nav-back">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
+        <a href="index.html" class="nav-brand">GFitApp</a>
     </nav>
 
-    <div class="container">
-        <div class="profile-card shadow">
-            <h1 class="fw-bold">Panel de <span class="text-warning">Socio</span></h1>
-            
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <p class="mb-1"><strong>Nombre:</strong> {{ socio.nombre }}</p>
-                    <p><strong>Email:</strong> {{ socio.email }}</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="mb-1"><strong>DNI:</strong> {{ socio.dni }}</p>
-                    <p><strong>Plan:</strong> <span class="badge-plan">{{ socio.plan }}</span></p>
-                </div>
-            </div>
-
-            <hr class="border-secondary my-4">
-
-            <h3 class="text-warning mb-3">Mis Reservas Recientes</h3>
-            
-            <div class="table-responsive">
-                <table class="table table-dark table-hover align-middle">
-                    <thead>
-                        <tr>
-                            <th>Clase</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if reservas %}
-                            {% for reserva in reservas %}
-                            <tr>
-                                <td>{{ reserva.clase }}</td>
-                                <td>{{ reserva.fecha }}</td>
-                                <td>{{ reserva.hora }}</td>
-                                <td class="text-center">
-                                    <form action="/borrar_reserva/{{ reserva.id }}" method="POST" onsubmit="return confirm('¿Estás seguro?');">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        {% else %}
-                            <tr>
-                                <td colspan="4" class="text-center text-secondary py-4">No tienes reservas activas</td>
-                            </tr>
-                        {% endif %}
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="mt-4">
-                <a href="/reservas" class="btn btn-warning fw-bold px-4">Nueva Reserva</a>
-                <a href="/" class="btn btn-outline-secondary ms-2 text-white">Volver al Inicio</a>
-            </div>
+    <main>
+        <div class="burbuja mx-auto text-center">
+            <h2 class="titulo">Tu Perfil</h2>
+            <p class="subtitulo">Gestiona tu información personal</p>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Vista de datos -->
+        <section id="perfilVista" class="burbuja mx-auto form-max">
+            <div class="text-center mb-4">
+                <i class="bi bi-person-circle" style="font-size: 4rem; color: #B3FD14;"></i>
+            </div>
+            <h4 class="mb-4 text-center">Datos personales</h4>
+            <div style="border-left: 6px solid #B3FD14; padding: 20px 24px; background: linear-gradient(145deg, #ffffff, #f8f9fa); border-radius: 20px; box-shadow: 0 6px 16px rgba(0,0,0,0.08);">
+                <div class="d-flex justify-content-between py-2 border-bottom"><span class="fw-bold">Nombre</span><span id="vistaNombre">—</span></div>
+                <div class="d-flex justify-content-between py-2 border-bottom"><span class="fw-bold">Apellidos</span><span id="vistaApellidos">—</span></div>
+                <div class="d-flex justify-content-between py-2 border-bottom"><span class="fw-bold">Email</span><span id="vistaEmail">—</span></div>
+                <div class="d-flex justify-content-between py-2"><span class="fw-bold">Teléfono</span><span id="vistaTelefono">—</span></div>
+            </div>
+            <div class="d-flex justify-content-center gap-2 mt-4 flex-wrap">
+                <button id="btnEditar" class="btn btn-dark">
+                    <i class="bi bi-pencil-square"></i> Editar perfil
+                </button>
+                <a href="historial.html" class="btn btn-dark">
+                    <i class="bi bi-clock-history"></i> Historial
+                </a>
+            </div>
+        </section>
+
+        <!-- Formulario de edición -->
+        <section id="perfilEdicion" class="burbuja mx-auto form-max" style="display:none;">
+            <div class="text-center mb-4">
+                <i class="bi bi-pencil-square" style="font-size: 3rem; color: #B3FD14;"></i>
+            </div>
+            <h4 class="mb-4 text-center">Editar datos personales</h4>
+            <form id="formPerfil">
+                <div class="mb-3">
+                    <label for="editNombre" class="form-label fw-bold">Nombre</label>
+                    <input type="text" id="editNombre" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="editApellidos" class="form-label fw-bold">Apellidos</label>
+                    <input type="text" id="editApellidos" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="editEmail" class="form-label fw-bold">Email</label>
+                    <input type="email" id="editEmail" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="editTelefono" class="form-label fw-bold">Teléfono</label>
+                    <input type="tel" id="editTelefono" class="form-control">
+                </div>
+                <div id="perfilSuccess" class="alert-success" style="display:none;"></div>
+                <div id="perfilFeedback" class="alert-danger" style="display:none;"></div>
+                <div class="d-flex justify-content-center gap-2 mt-4 flex-wrap">
+                    <button type="submit" class="btn btn-dark">
+                        <i class="bi bi-check-lg"></i> Guardar cambios
+                    </button>
+                    <button type="button" id="btnCancelar" class="btn btn-secondary">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 GFitApp &mdash; Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
